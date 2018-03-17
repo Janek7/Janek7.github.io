@@ -16,6 +16,7 @@ class Game {
         this.mines = mines;
         this.remainingMines = mines;
         this.ingame = true;
+        this.tableElement = document.getElementById("gameboard");
         document.getElementById("mineCounter").innerHTML = this.remainingMines;
         this.timer = new Timer();
         this.generateGameboard();
@@ -32,6 +33,7 @@ class Game {
 
         for (var rows = 0; rows < this.height; rows++) {
             var row = document.createElement("tr");
+            row.setAttribute("id", "row" + rows);
 
             for (var cols = 0; cols < this.width; cols++) {
                 var data = document.createElement("td");
@@ -170,6 +172,17 @@ class Game {
      */
     updateRemainingMineCounter() {
         document.getElementById("mineCounter").innerHTML = this.remainingMines;
+    }
+
+    /**
+     * deletes the gameboard and stops the timer
+     */
+    delteGameBoard() {
+        while(this.tableElement.rows.length>0) {
+            this.tableElement.deleteRow(0);
+        }
+        this.timer.stop();
+        document.getElementById("secCounter").innerHTML = "" + 0;
     }
 
 }
