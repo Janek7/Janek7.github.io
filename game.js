@@ -113,16 +113,6 @@ class Game {
                         break;
                 }
 
-                //eigentlich bessere Lösung funktioniert aber irgendwie net
-                /*for (var enumKey in FieldValueEnum) {
-                    var enumValue = FieldValueEnum[enumKey];
-                    alert(FieldValueEnum.properties[enumValue].numberOfMinesAround + " " + numberOfMinesAround);
-                    if (FieldValueEnum.properties[enumValue].numberOfMinesAround == numberOfMinesAround) {
-                        field.fieldValue = enumKey;
-                    }
-                }*/
-
-
             }
         }
 
@@ -150,7 +140,7 @@ class Game {
     /**
      * ends the game (timer stops and all mines become uncovered)
      */
-    end(win) {
+    end(win, mine) {
 
         this.timer.stop();
         this.ingame = false;
@@ -160,7 +150,7 @@ class Game {
             //TODO: falsch gesetzte Flaggen beim Aufdecken anzeigen http://www.metrixx7.de/m/20723.png
             for (var index in this.fields) {
                 var field = this.fields[index];
-                if (field.isMine()) field.uncover();
+                if (field.isMine() && field.element != mine) field.uncover();
             }
         }
         document.getElementById(win ? "winText" : "loseText").style.display = "block";
@@ -241,7 +231,10 @@ class Field {
 
         this.covered = false;
         this.setImage(FieldValueEnum.properties[this.fieldValue].imgpath);
-        if (this.isMine() && this.game.ingame) this.game.end();
+        if (this.isMine() && this.game.ingame) {
+            this.game.end(false, this.element);
+            this.setImage("images/mine_false.png")
+        }
         else if (this.isBlank()) this.uncoverNeighbours();
 
     }
