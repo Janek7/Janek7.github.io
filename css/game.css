@@ -3,11 +3,8 @@
     margin-right: auto;
 }
 
-table tr{
-    border-style: solid;
-}
-
 table {
     border-style: solid;
     background-color: gray;
+    margin-top: 30pt;
 }
