@@ -31,7 +31,7 @@
                     </td>
                     <td>
                         <label for="widthInput">Breite</label>
-                        <input id="widthInput" type="number" value="0"/>
+                        <input id="widthInput" type="text" value="0"/>
                         <br/>
                     </td>
                 </tr>
@@ -42,18 +42,18 @@
                     </td>
                     <td>
                         <label for="heightInput">Höhe</label>
-                        <input id="heightInput" type="number"/>
+                        <input id="heightInput" type="text"/>
                         <br/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="expert">Bo$$</label>
+                        <label for="expert">Experte</label>
                         <input type="radio" id="expert" name="mode" checked="checked"/>
                     </td>
                     <td>
                         <label for="mineInput">Minen</label>
-                        <input id="mineInput" type="number"/>
+                        <input id="mineInput" type="text"/>
                         <br/>
                     </td>
                 </tr>
@@ -135,9 +135,26 @@
 
     };
 
-    for (var index in radioButtonList) {
-        radioButtonList[index].addEventListener("change", changeTemplate);
+    for (var radioButtonIndex in radioButtonList) {
+        radioButtonList[radioButtonIndex].addEventListener("change", changeTemplate);
     }
+    window.addEventListener("load", changeTemplate);
+
+    /*var inputElements = [document.getElementById("widthInput"), document.getElementById("heightInput"), document.getElementById("mineInput")];
+    var proofInput = function (ev) {
+        for (var inputElementIndex in inputElements) {
+            var inputElement = inputElements[inputElementIndex];
+            alert(inputElement.value.match(/\d+/));
+            if (inputElement.value.match(/^\d+$/) == null) {
+                changeTemplate();
+            }
+        }
+    };
+    for (var inputElementIndex in inputElements) {
+        inputElements[inputElementIndex].addEventListener("input", proofInput, false);
+    }*/
+
+
 
 
     //new game stuff
@@ -148,7 +165,10 @@
             document.getElementById("winText").style.display = "none";
             document.getElementById("loseText").style.display = "none";
         }
-        game = new Game(10, 20, 30);
+        game = new Game( document.getElementById("widthInput").getAttribute("value"),
+            document.getElementById("heightInput").getAttribute("value"),
+            document.getElementById("mineInput").getAttribute("value")
+        );
     });
 </script>
 
