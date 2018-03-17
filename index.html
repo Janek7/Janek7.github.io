@@ -31,8 +31,8 @@
                         <input type="radio" id="beginner" name="mode"/>
                     </td>
                     <td>
-                        <label for="widthInput">Breite</label>
-                        <input id="widthInput" type="text" value="0"/>
+                        <label for="heightInput">Höhe</label>
+                        <input id="heightInput" type="text" value="0"/>
                         <br/>
                     </td>
                 </tr>
@@ -42,8 +42,8 @@
                         <input type="radio" id="intermediate" name="mode"/>
                     </td>
                     <td>
-                        <label for="heightInput">Höhe</label>
-                        <input id="heightInput" type="text"/>
+                        <label for="widthInput">Breite</label>
+                        <input id="widthInput" type="text"/>
                         <br/>
                     </td>
                 </tr>
@@ -122,8 +122,8 @@
             mineValue = 99;
         }
 
-        document.getElementById("widthInput").setAttribute("value", widthValue);
-        document.getElementById("heightInput").setAttribute("value", heightValue);
+        document.getElementById("heightInput").setAttribute("value", widthValue);
+        document.getElementById("widthInput").setAttribute("value", heightValue);
         document.getElementById("mineInput").setAttribute("value", mineValue);
 
     };
@@ -158,8 +158,8 @@
             document.getElementById("winText").style.display = "none";
             document.getElementById("loseText").style.display = "none";
         }
-        game = new Game(document.getElementById("widthInput").getAttribute("value"),
-            document.getElementById("heightInput").getAttribute("value"),
+        game = new Game(document.getElementById("heightInput").getAttribute("value"),
+            document.getElementById("widthInput").getAttribute("value"),
             document.getElementById("mineInput").getAttribute("value")
         );
     });
