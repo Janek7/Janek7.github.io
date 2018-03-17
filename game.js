@@ -16,11 +16,11 @@ class Game {
         this.mines = mines;
         this.remainingMines = mines;
         this.ingame = true;
+        this.firstFieldUncovered = false;
         this.tableElement = document.getElementById("gameboard");
         document.getElementById("mineCounter").innerHTML = this.remainingMines;
         this.timer = new Timer();
         this.generateGameboard();
-        this.generateMines();
 
     }
 
@@ -51,7 +51,7 @@ class Game {
     /**
      * spreads mines over the fields randomly
      */
-    generateMines() {
+    generateMines(clickedField) {
 
         for (var mineCounter = 0; mineCounter < this.mines; mineCounter++) {
             var field;
@@ -59,7 +59,7 @@ class Game {
                 var x = Math.floor(Math.random() * this.height);
                 var y = Math.floor(Math.random() * this.width);
                 field = getFieldFromPos(this, x, y);
-            } while (field.isMine());
+            } while (field.isMine() || clickedField == field);
             field.fieldValue = FieldValueEnum.MINE;
         }
         this.computeFieldImages();
@@ -229,6 +229,10 @@ class Field {
      */
     uncover() {
 
+        if (!this.game.firstFieldUncovered) {
+            this.game.firstFieldUncovered = true;
+            this.game.generateMines(this);
+        }
         this.covered = false;
         this.setImage(FieldValueEnum.properties[this.fieldValue].imgpath);
         if (this.isMine() && this.game.ingame) {
