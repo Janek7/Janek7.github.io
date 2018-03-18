@@ -62,14 +62,14 @@ class Game {
             } while (field.isMine() || clickedField == field);
             field.fieldValue = FieldValueEnum.MINE;
         }
-        this.computeFieldImages();
+        this.computeFieldImages(clickedField);
 
     }
 
     /**
      * computes the number of mines around of each field and sets the image
      */
-    computeFieldImages() {
+    computeFieldImages(clickedField) {
 
         for (var index in this.fields) {
             var field = this.fields[index];
@@ -112,7 +112,12 @@ class Game {
                         field.fieldValue = FieldValueEnum.EIGHT;
                         break;
                 }
-
+                if (field == clickedField && !field.isBlank()) {
+                    for (var fieldIndex in this.fields) {
+                        this.fields[fieldIndex].fieldValue = null;
+                    }
+                    this.generateMines(clickedField);
+                }
             }
         }
 
