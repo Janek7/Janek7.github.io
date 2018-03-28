@@ -159,6 +159,7 @@ class Game {
             }
         }
         document.getElementById(win ? "winText" : "loseText").style.display = "block";
+        //writeRecordInCookie()
 
     }
 
