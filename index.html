@@ -7,163 +7,85 @@
     <link rel="stylesheet" href="css/game.css" type="text/css">
     <link rel="stylesheet" href="css/header.css" type="text/css">
     <link rel="stylesheet" href="css/settings.css" type="text/css">
-    <script src="js/game.js" type="text/javascript"></script>
+    <script src="js/game.js" type="application/ecmascript"></script>
+    <script src="js/stats.js" type="application/ecmascript"></script>
+
 </head>
 <body class="mainBox">
 
 <div id="infoBox">
-<h1>Minesweeper</h1>
-<button id="settingsButton">Settings</button>
-<br/>
-<div class="settingsOutBox" id="settingsOutBox">
-    <div class="settingsBox">
-        <div class="settingsHeader">
-            <p>Settings</p>
-            <p id="closeSettings">X</p>
+    <h1>Minesweeper</h1>
+    <button id="settingsButton">Settings</button>
+    <br/>
+    <div class="settingsOutBox" id="settingsOutBox">
+        <div class="settingsBox">
+            <div class="settingsHeader">
+                <p>Settings</p>
+                <p id="closeSettings">X</p>
+            </div>
+            <br/>
+            <p>Einstellungen</p>
+            <form action="">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="beginner">Anfänger</label>
+                            <input type="radio" id="beginner" name="mode"/>
+                        </td>
+                        <td>
+                            <label for="heightInput">Höhe</label>
+                            <input id="heightInput" type="text" value="0"/>
+                            <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="intermediate">Fortgeschritten</label>
+                            <input type="radio" id="intermediate" name="mode"/>
+                        </td>
+                        <td>
+                            <label for="widthInput">Breite</label>
+                            <input id="widthInput" type="text"/>
+                            <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="expert">Experte</label>
+                            <input type="radio" id="expert" name="mode" checked="checked"/>
+                        </td>
+                        <td>
+                            <label for="mineInput">Minen</label>
+                            <input id="mineInput" type="text"/>
+                            <br/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
-        <br/>
-        <p>Einstellungen</p>
-        <form action="">
-            <table>
-                <tr>
-                    <td>
-                        <label for="beginner">Anfänger</label>
-                        <input type="radio" id="beginner" name="mode"/>
-                    </td>
-                    <td>
-                        <label for="heightInput">Höhe</label>
-                        <input id="heightInput" type="text" value="0"/>
-                        <br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="intermediate">Fortgeschritten</label>
-                        <input type="radio" id="intermediate" name="mode"/>
-                    </td>
-                    <td>
-                        <label for="widthInput">Breite</label>
-                        <input id="widthInput" type="text"/>
-                        <br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="expert">Experte</label>
-                        <input type="radio" id="expert" name="mode" checked="checked"/>
-                    </td>
-                    <td>
-                        <label for="mineInput">Minen</label>
-                        <input id="mineInput" type="text"/>
-                        <br/>
-                    </td>
-                </tr>
-            </table>
-        </form>
     </div>
-</div>
-<br/>
-<button id="startNewGameButton">Neues Spiel</button>
-<br/>
-<br/>
+    <br/>
+    <button id="startNewGameButton">Neues Spiel</button>
+    <br/>
+    <br/>
 
-<div id="header">
-    <div class="header-module">
-        <p class="info-text">Anzahl Minen:</p>
-        <p id="mineCounter"></p>
+    <div id="header">
+        <div class="header-module">
+            <p class="info-text">Anzahl Minen:</p>
+            <p id="mineCounter"></p>
+        </div>
+        <div class="header-module">
+            <p class="info-text">Sekunden:</p>
+            <p id="secCounter">0</p>
+        </div>
     </div>
-    <div class="header-module">
-        <p class="info-text">Sekunden:</p>
-        <p id="secCounter">0</p>
-    </div>
-</div>
+    <p id="recordText"></p>
     <p id="winText" class="endText">Gewonnen!</p>
     <p id="loseText" class="endText">Verloren!</p>
 </div>
 <table id="gameboard" oncontextmenu="return false;"/>
 
-<script type="application/ecmascript">
-    'use strict';
-
-    //settings stuff
-    document.getElementById("settingsButton").addEventListener("click", function (ev) {
-        document.getElementById("settingsOutBox").style.display = "block";
-    });
-
-    document.getElementById("closeSettings").addEventListener("click", function (ev) {
-        document.getElementById("settingsOutBox").style.display = "none";
-    });
-
-    var beginnerRadioButton = document.getElementById("beginner");
-    var intermediateRadioButton = document.getElementById("intermediate");
-    var expertRadioButton = document.getElementById("expert");
-    var radioButtonList = [];
-    radioButtonList.push(beginnerRadioButton);
-    radioButtonList.push(intermediateRadioButton);
-    radioButtonList.push(expertRadioButton);
-
-    var changeTemplate = function (ev) {
-
-        var widthValue;
-        var heightValue;
-        var mineValue;
-
-        if (beginnerRadioButton.checked) {
-            widthValue = 9;
-            heightValue = 9;
-            mineValue = 10;
-        } else if (intermediateRadioButton.checked) {
-            widthValue = 16;
-            heightValue = 16;
-            mineValue = 40;
-        } else if (expertRadioButton.checked) {
-            widthValue = 16;
-            heightValue = 30;
-            mineValue = 99;
-        }
-
-        document.getElementById("heightInput").setAttribute("value", widthValue);
-        document.getElementById("widthInput").setAttribute("value", heightValue);
-        document.getElementById("mineInput").setAttribute("value", mineValue);
-
-    };
-
-    for (var radioButtonIndex in radioButtonList) {
-        radioButtonList[radioButtonIndex].addEventListener("change", changeTemplate);
-    }
-    window.addEventListener("load", changeTemplate);
-
-    //Eingabeprüfungen
-    /*var inputElements = [document.getElementById("widthInput"), document.getElementById("heightInput"), document.getElementById("mineInput")];
-    var proofInput = function (ev) {
-        for (var inputElementIndex in inputElements) {
-            var inputElement = inputElements[inputElementIndex];
-            alert(inputElement.value.match(/\d+/));
-            if (inputElement.value.match(/^\d+$/) == null) {
-                changeTemplate();
-            }
-        }
-    };
-    for (var inputElementIndex in inputElements) {
-        inputElements[inputElementIndex].addEventListener("input", proofInput, false);
-    }*/
-
-
-
-    //new game stuff
-    var game;
-    document.getElementById("startNewGameButton").addEventListener("click", function (ev) {
-        if (game != null) {
-            game.delteGameBoard();
-            document.getElementById("winText").style.display = "none";
-            document.getElementById("loseText").style.display = "none";
-        }
-        game = new Game(document.getElementById("heightInput").getAttribute("value"),
-            document.getElementById("widthInput").getAttribute("value"),
-            document.getElementById("mineInput").getAttribute("value")
-        );
-    });
-</script>
+<script src="js/df.js" type="application/ecmascript"></script>
 
 </body>
 </html>

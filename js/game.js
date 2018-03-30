@@ -1,5 +1,10 @@
 'use strict';
 
+function abfuck() {
+    alert("from game");
+}
+
+
 class Game {
 
     /**
