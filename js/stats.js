@@ -1,12 +1,14 @@
+'use strict';
+
 /**
  * get record of difficulty form cookie
  * @param difficulty selected difficulty
  * @returns {*} record as string
  */
-export function getRecord(difficulty) {
+function getRecord(difficulty) {
 
     var recordString = "";
-    var cookieList = document.cookie.split(";");
+    var cookieList = document.cookie.split("; ");
     for (var i in cookieList) {
         var kvpair = cookieList[i].split("=");
         var key = kvpair[0];
@@ -41,10 +43,11 @@ function setRecordText(difficulty) {
  * @param difficulty selected difficulty
  * @param seconds game time
  */
-export function writeRecordInCookie(difficulty, seconds) {
+function writeRecordInCookie(difficulty, seconds) {
 
     if (getRecord(difficulty) == "-" || seconds < getRecord(difficulty)) {
         document.cookie = difficulty + "=" + seconds;
+        setRecordText(difficulty);
     }
 
 }

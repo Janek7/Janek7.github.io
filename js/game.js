@@ -16,6 +16,7 @@ class Game {
         this.mines = mines;
         this.remainingMines = mines;
         this.ingame = true;
+        this.difficulty = getSelectedDifficulty();
         this.firstFieldUncovered = false;
         this.tableElement = document.getElementById("gameboard");
         document.getElementById("mineCounter").innerHTML = this.remainingMines;
@@ -157,9 +158,10 @@ class Game {
                 var field = this.fields[index];
                 if (field.isMine() && field.element != mine) field.uncover();
             }
+        } else {
+            writeRecordInCookie(this.difficulty, this.timer.seconds);
         }
         document.getElementById(win ? "winText" : "loseText").style.display = "block";
-        //writeRecordInCookie()
 
     }
 
@@ -410,6 +412,7 @@ class Timer {
      */
     constructor() {
         this.intervalFunction = null;
+        this.seconds = 0;
         this.updateSeconds();
     }
 
@@ -417,10 +420,10 @@ class Timer {
      * updates the timer element every second
      */
     updateSeconds() {
-        var seconds = 0;
+        var _this = this;
         this.intervalFunction = setInterval(function () {
-            seconds++;
-            document.getElementById("secCounter").innerHTML = "" + seconds;
+            _this.seconds = _this.seconds + 1;
+            document.getElementById("secCounter").innerHTML = "" + _this.seconds;
         }, 1000);
     }
 
