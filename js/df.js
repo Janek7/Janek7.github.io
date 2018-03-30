@@ -9,6 +9,13 @@ document.getElementById("closeSettings").addEventListener("click", function (ev)
     document.getElementById("settingsOutBox").style.display = "none";
 });
 
+document.getElementById("deleteRecords").addEventListener("click", function (ev) {
+   document.cookie = "beginner=-";
+   document.cookie = "intermediate=-";
+   document.cookie = "expert=-";
+   setRecordText(getSelectedDifficulty())
+});
+
 var beginnerRadioButton = document.getElementById("beginner");
 var intermediateRadioButton = document.getElementById("intermediate");
 var expertRadioButton = document.getElementById("expert");

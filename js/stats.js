@@ -8,7 +8,7 @@
 function getRecord(difficulty) {
 
     var recordString = "";
-    var cookieList = document.cookie.split(";");
+    var cookieList = document.cookie.split("; ");
     for (var i in cookieList) {
         var kvpair = cookieList[i].split("=");
         var key = kvpair[0];
@@ -47,6 +47,7 @@ function writeRecordInCookie(difficulty, seconds) {
 
     if (getRecord(difficulty) == "-" || seconds < getRecord(difficulty)) {
         document.cookie = difficulty + "=" + seconds;
+        setRecordText(difficulty);
     }
 
 }
